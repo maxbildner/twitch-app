@@ -9,7 +9,7 @@ class Main extends React.Component {
     this.state = {
       artists: [],
       name: '',
-      streamData: null,
+      streamData: [],
     };
   }
 
@@ -34,11 +34,18 @@ class Main extends React.Component {
 
     // make HTTP request to Node backend
     axios.get("/getLiveStreams").then((response) => {
-      // console.log(response.data);   //=> 
       // console.log(response);
-      this.setState({
-        streamData: response.data
-      });
+      // console.log(response.data);   //=> 
+      debugger
+
+      if (response.status === 200) {
+        this.setState({
+          streamData: response.data.data    // array of objects
+        });
+
+      } else {
+        console.log(response.status);
+      }
     });
   }
 
@@ -60,7 +67,18 @@ class Main extends React.Component {
 
 
   renderStreams = () => {
-    return null;
+    const { streamData } = this.state;
+
+    let liveStreamers = streamData.map((artistObj, idx) => {
+      return (
+        <li key={idx}>
+          {artistObj.user_name}
+          {artistObj.thumbnail_url}
+        </li>
+      );
+    })
+
+    return (liveStreamers.length) ? liveStreamers : null;
   }
 
 

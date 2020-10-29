@@ -52,36 +52,39 @@ const getStreams = (url, accessToken, callback) => {
   
   // GET request to twitch API endpoint to get all streams for certain artists
   request.get(streamOptions, (err, res, body) => {
-    if (err) return console.log(err);
     console.log(`GET STREAMS Status: ${res.statusCode}`);
+    if (err) return console.log(err);
+
     // console.log(JSON.parse(body));
-    callback(JSON.parse(body));
+    const parsedBody = JSON.parse(body);
+
+    // send parsedBody back to client
+    callback(parsedBody);
   });
 }
 
 
 // wait 4 seconds (so we can get Access Token), then execute callback getStreams
-setTimeout( () => {
-  getStreams(process.env.GET_STREAMS, ACCESS_TOKEN, (response) => {
-    console.log(response);
-  });
-}, 4000);
+// setTimeout( () => {
+//   getStreams(process.env.GET_STREAMS, ACCESS_TOKEN, (response) => {
+//     console.log(response);
+//   });
+// }, 4000);
 
 
 
 // API ENDPOINT- get all current live streams for list of user names
+// when client makes HTTP GET request to this URL API ENDPOINT
+// we make an HTTPS GET request
+app.get("/getLiveStreams", (req, res) => {
+  console.log('getLiveStreams HIT');
+  // make GET request to weather API, on response, run call back function 
+  getStreams(process.env.GET_STREAMS, ACCESS_TOKEN, (response) => {
 
-
-
-
-// if client were to send an HTTP GET request to localhost: 5000 /
-//   we would get 'Goodbye world' back from server
-
-// const ACCESS_KEY = '309a69b19352d8ec09b559fb679716bb';
-// const LOCATION = 'New York';
-// const WEATHER_URL = `http://api.weatherstack.com/current?access_key=${ACCESS_KEY}`
-//   + `&query=${LOCATION}`;
-
+    // send response back to client
+    res.send(response)
+  });
+});
 
 // when client makes HTTP GET request to this URL API ENDPOINT
 //    we make HTTPS GET request to TWITCH API ENDPOINT to get all current 
@@ -105,7 +108,7 @@ setTimeout( () => {
 //   });
 // });
 
-// app.listen(port, () => console.log(`server listening on port ${port}`));
+app.listen(port, () => console.log(`server listening on port ${port}`));
 
 
 
