@@ -7,7 +7,17 @@ class Main extends React.Component {
     super(props);
 
     this.state = {
-      artists: [],
+      // artists: [],
+      artists: [
+        "gabrielanddresden",
+        "insomniac",
+        "itsgoodtv",
+        "paxahau",
+        "djjazzyjeff",
+        "elseworldtv",
+        "chris_liebing_official",
+        "beatportofficial",
+        "maryle_mar"],
       name: '',
       streamData: [],
     };
@@ -20,10 +30,17 @@ class Main extends React.Component {
 
 
   handleAddUser = (e) => {
-    let newUsers = this.state.artists.slice();
-    newUsers.push(this.state.name);
-    this.setState({ artists: newUsers, name: ''});
     e.preventDefault();
+
+    let newUsers = this.state.artists.slice();
+
+    if (this.state.name.trim() !== "") {
+      newUsers.push(this.state.name);
+      this.setState({ artists: newUsers, name: ''});
+
+    } else {
+      alert("Form can't be blank!");
+    }
   }
 
 
@@ -58,7 +75,7 @@ class Main extends React.Component {
 
     let artistsLi = artists.map((artist, idx) => {
       return (
-        <li key={idx}>
+        <li key={idx} className="artists-li">
           {artist}
         </li>
       );
@@ -69,14 +86,31 @@ class Main extends React.Component {
   }
 
 
+  handleClickStream = (name) => {
+
+  }
+
+
   renderStreams = () => {
     const { streamData } = this.state;
 
     let liveStreamers = streamData.map((artistObj, idx) => {
+      let thumbnailImgUrl = artistObj.thumbnail_url;
+
+      // replace "width" and "height" with actual numbers
+      thumbnailImgUrl = thumbnailImgUrl.split("{width}").join("100");   // pixels
+      thumbnailImgUrl = thumbnailImgUrl.split("{height}").join("100");
+
+      let thumbnailImg = <img src={thumbnailImgUrl}/>;
+      let liveUrl = `https://www.twitch.tv/${artistObj.user_name}`;
+
       return (
-        <li key={idx}>
-          {artistObj.user_name}
-          {artistObj.thumbnail_url}
+        // <li key={idx} className="streams-li" onClick={() => this.handleClickStream(artistObj.user_name)}>
+        <li key={idx} className="streams-li">
+          <a href={liveUrl} target="_blank" className="stream-url">
+            <span className="thumbnail-img">{thumbnailImg}</span> 
+            <span className="streams-user_name">{artistObj.user_name}</span> 
+          </a>
         </li>
       );
     })
@@ -91,9 +125,7 @@ class Main extends React.Component {
     
 
     return (
-      <div>
-        <h1>Find Who's Live Streaming on TWITCH</h1>
-
+      <div className="main-wrap">
         <div className="artists-wrap">
           <form onSubmit={this.handleSubmit}>
             <label>
@@ -105,7 +137,7 @@ class Main extends React.Component {
             </label>
             <button onClick={this.handleAddUser}>Add User</button>
             <div>
-              <input type="submit" value="Search"/>
+              <input type="submit" value="Search" className="input-button"/>
             </div>
           </form>
         </div>
@@ -115,6 +147,8 @@ class Main extends React.Component {
             {this.renderArtists()}
           </ul>
         </div>
+
+        <h2 className="results">Results: </h2>
 
         <div className="live-streams">
           <ul>

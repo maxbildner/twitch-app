@@ -1,19 +1,6 @@
-.App {
-  text-align: center;
-}
+@import "reset.css";
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
+/* .App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -22,17 +9,80 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+} */
+
+html, body {
+  height: 100%;
+  width: 100%;
 }
 
-.App-link {
-  color: #61dafb;
+body {
+  background-color: #282c34;
+  color: white;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.App {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  font-size: calc(10px + 2vmin);
+}
+
+.App-header {
+  text-align: center;
+  padding: 1rem 0;
+  /* background: lightskyblue; */
+}
+
+button:hover,
+.input-button:hover {
+  cursor: pointer;
+}
+
+/* MAIN COMPONENT */
+.main-wrap {
+  /* background: pink; */
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+
+/* ARTIST LIST */
+li {
+  list-style-type: none;
+  font-size: 1rem;
+}
+
+.artists-list {
+  padding-top: 1rem;
+}
+
+.artists-li,
+.streams-li {
+  /* background: lightblue; */
+  padding: .5rem .5rem;
+  border-bottom: 1px solid lightgrey;
+}
+
+.results {
+  padding-top: 3rem;
+  padding-bottom: 1rem;
+}
+
+li.streams-li:hover {
+  /* cursor: pointer; */
+  background: #64676dbd !important;
+}
+
+.thumbnail-img {
+  padding-right: 1rem;
+}
+
+.stream-url {
+  color: white;
+  text-decoration: none;
+}
+
+.stream-url:hover {
+  text-decoration: underline;
 }
