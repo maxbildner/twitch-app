@@ -32,11 +32,14 @@ class Main extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    // make HTTP request to Node backend
-    axios.get("/getLiveStreams").then((response) => {
+    const options = {
+      params: { users: this.state.artists }
+    };
+
+    // make HTTP request to Node backend (send list of artists to backend)
+    axios.get("/getLiveStreams", options).then((response) => {
       // console.log(response);
       // console.log(response.data);   //=> 
-      debugger
 
       if (response.status === 200) {
         this.setState({
@@ -89,7 +92,7 @@ class Main extends React.Component {
 
     return (
       <div>
-        <h1>Find Who is Live Streaming on TWITCH</h1>
+        <h1>Find Who's Live Streaming on TWITCH</h1>
 
         <div className="artists-wrap">
           <form onSubmit={this.handleSubmit}>
@@ -180,3 +183,8 @@ export default Main;
 // }
 
 // export default Weather;
+
+
+// 0: { id: "39815181116", user_id: "456427110", user_name: "BeatportOfficial", game_id: "26936", type: "live", … }
+// 1: { id: "39611456029", user_id: "232672264", user_name: "Insomniac", game_id: "26936", type: "live", … }
+// 2: { id: "40268717694", user_id: "12543514", user_name: "paxahau", game_id: "26936", type: "live", … }

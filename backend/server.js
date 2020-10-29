@@ -1,9 +1,10 @@
+const { query } = require('express');
 const express = require('express');               // imports express framework (like ruby on rails)
 const app = express();                            // ?
 const request = require("request");               // module to make serverside http requests (OUTDATED)
 const port = 5000;                                // express runs on same default port as create-react-app (3000), so change it so there's no conflict
 require('dotenv').config();                       // so we don't expose our secret key
-const twitchUsersURL = require('./twitchUsers'); 
+// const twitchUsersURL = require('./twitchUsers'); 
 
 
 // get API ACCESS TOKEN from Twitch
@@ -38,11 +39,14 @@ getToken(process.env.GET_TOKEN, (res) => {
 
 
 // function to get live music streams
-const getStreams = (url, accessToken, callback) => {
+const getStreams = (url, users, accessToken, callback) => {
+  
+  let twitchUsers = (users !== undefined) ? "?user_login=" + users.join("&user_login=") : [];
 
   // params for get request
   const streamOptions = {
-    url: url + twitchUsersURL,      // list of artists are embedded here
+    // url: url + twitchUsersURL,           // for testing only
+    url: url + twitchUsers,                 // list of artists are embedded here
     method: 'GET',
     headers: {
       'Client-ID': process.env.CLIENT_ID,
@@ -64,49 +68,27 @@ const getStreams = (url, accessToken, callback) => {
 }
 
 
-// wait 4 seconds (so we can get Access Token), then execute callback getStreams
-// setTimeout( () => {
-//   getStreams(process.env.GET_STREAMS, ACCESS_TOKEN, (response) => {
-//     console.log(response);
-//   });
-// }, 4000);
-
-
 
 // API ENDPOINT- get all current live streams for list of user names
 // when client makes HTTP GET request to this URL API ENDPOINT
 // we make an HTTPS GET request
 app.get("/getLiveStreams", (req, res) => {
   console.log('getLiveStreams HIT');
+
+  // console.log(req.query);
+  // console.log(req);
+  // console.log(req.params);
+  const users = req.query.users;
+  // ['insomniac', ... ]
+  // console.log(req.query.users);
+
   // make GET request to weather API, on response, run call back function 
-  getStreams(process.env.GET_STREAMS, ACCESS_TOKEN, (response) => {
+  getStreams(process.env.GET_STREAMS, users, ACCESS_TOKEN, (response) => {
 
     // send response back to client
     res.send(response)
   });
 });
-
-// when client makes HTTP GET request to this URL API ENDPOINT
-//    we make HTTPS GET request to TWITCH API ENDPOINT to get all current 
-//    live streams for certain artists
-// app.get("/getCurrentLiveStreams", (req, res) => {
-
-//   // make GET request to weather API, on response, run call back function 
-//   request(WEATHER_URL, (error, response, body) => {
-//     if (!error && response.statusCode === 200) {
-
-//       const parsedBody = JSON.parse(body);
-
-//       const temp = parsedBody.current.temperature;
-
-//       // send temperature back to client
-//       res.send({ temp });
-
-//       // send body of response back to client
-//       // res.send(body);
-//     }
-//   });
-// });
 
 app.listen(port, () => console.log(`server listening on port ${port}`));
 
@@ -161,4 +143,3 @@ app.listen(port, () => console.log(`server listening on port ${port}`));
 
 // app.listen(port, () => console.log(`example app listening on port ${port}`));
 // ***** WEATHER APP TUTORIAL ************************************************
-
