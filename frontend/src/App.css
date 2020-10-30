@@ -38,9 +38,24 @@ body {
   /* background: lightskyblue; */
 }
 
+.input-field-adduser {
+  margin-right: 1rem;
+  width: 11rem;
+  height: 1.3rem;
+}
+
 button:hover,
 .input-button:hover {
   cursor: pointer;
+}
+
+button,
+.input-button {
+  font-size: 1rem;
+}
+
+.input-button {
+  margin-top: 1rem;
 }
 
 /* MAIN COMPONENT */
@@ -67,7 +82,7 @@ li {
 .streams-li {
   /* background: lightblue; */
   padding: .5rem .5rem;
-  border-bottom: 1px solid lightgrey;
+  border-bottom: 1px solid #5c5c5c87;
 }
 
 .results {
@@ -99,6 +114,7 @@ li.streams-li:hover {
   /* background: blueviolet; */
   max-width: 40rem;
   margin: 0 auto;
+  padding-top: 3rem;
   padding-bottom: 1rem;
 }
 

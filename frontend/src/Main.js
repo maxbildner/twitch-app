@@ -100,11 +100,11 @@ class Main extends React.Component {
       let liveUrl = `https://www.twitch.tv/${artistObj.user_name}`;
 
       return (
-        // <li key={idx} className="streams-li" onClick={() => this.handleClickStream(artistObj.user_name)}>
         <li key={idx} className="streams-li">
           <a href={liveUrl} target="_blank" className="stream-url">
             <span className="thumbnail-img">{thumbnailImg}</span> 
             <span className="streams-user_name">{artistObj.user_name}</span> 
+            {/* <iframe src={`https://player.twitch.tv/?channel=${artistObj.user_name}&parent=http://34.205.63.217`} frameBorder="0" allowFullScreen="true" scrolling="no" height="378" width="620"></iframe> */}
           </a>
         </li>
       );
@@ -121,7 +121,7 @@ class Main extends React.Component {
     return (
       <div className="main-wrap">
         <header className="App-header">
-          <h1>Find Who's Live Streaming on TWITCH</h1>
+          <h1>Find Who's Live Streaming on Twitch.tv</h1>
         </header>
 
         <div className="artists-wrap">
@@ -131,6 +131,7 @@ class Main extends React.Component {
                 type="text" 
                 value={this.state.name} 
                 onChange={this.handleChange}
+                className="input-field-adduser"
               />
             </label>
             <button onClick={this.handleAddUser}>Add User</button>
@@ -162,11 +163,25 @@ export default Main;
 
 
 // TO DO
-// - git repo link
-// - styling input fields
+
+// DONE
 // - width for iphone vertical
+// - styling input fields
+// - git repo link
 
+// TWITCH JS EMBED
+// {/* !-- Add a placeholder for the Twitch embed -->
+//             // <div id="twitch-embed"></div>
 
+//             {/* <!-- Load the Twitch embed script --> */}
+// <script src="https://player.twitch.tv/js/embed/v1.js"></script>
+
+// {/* <!-- Create a Twitch.Player object. This will render within the placeholder div --> */ }
+// <script type="text/javascript">{
+//   new Twitch.Player("twitch-embed", {
+//     channel: artistObj.user_name
+//   })}
+// </script>
 
 
 
