@@ -1,15 +1,14 @@
 import './App.css';
 import Main from './Main';
+import Footer from './Footer';
 
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">   
-        <h1>Find Who's Live Streaming on TWITCH</h1>     
-      </header>
-      
       <Main/>
+
+      <Footer/>
     </div>
   );
 }

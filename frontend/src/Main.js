@@ -86,19 +86,14 @@ class Main extends React.Component {
   }
 
 
-  handleClickStream = (name) => {
-
-  }
-
-
   renderStreams = () => {
     const { streamData } = this.state;
 
     let liveStreamers = streamData.map((artistObj, idx) => {
       let thumbnailImgUrl = artistObj.thumbnail_url;
 
-      // replace "width" and "height" with actual numbers
-      thumbnailImgUrl = thumbnailImgUrl.split("{width}").join("100");   // pixels
+      // replace "width" and "height" with actual numbers (100 px)
+      thumbnailImgUrl = thumbnailImgUrl.split("{width}").join("100");   
       thumbnailImgUrl = thumbnailImgUrl.split("{height}").join("100");
 
       let thumbnailImg = <img src={thumbnailImgUrl}/>;
@@ -120,12 +115,15 @@ class Main extends React.Component {
 
 
   render() {
-    // debugger
-    console.log(this.state);
+    console.log("STATE:", this.state);
     
 
     return (
       <div className="main-wrap">
+        <header className="App-header">
+          <h1>Find Who's Live Streaming on TWITCH</h1>
+        </header>
+
         <div className="artists-wrap">
           <form onSubmit={this.handleSubmit}>
             <label>
@@ -155,14 +153,18 @@ class Main extends React.Component {
             {this.renderStreams()}
           </ul>
         </div>
-
-        {/* <button onClick={this.handleButtonClick}>Get weather in NYC</button> */}
       </div>
     );
   }
 }
 
 export default Main;
+
+
+// TO DO
+// - git repo link
+// - styling input fields
+// - width for iphone vertical
 
 
 
